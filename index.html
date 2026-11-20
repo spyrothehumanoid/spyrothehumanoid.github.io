@@ -817,8 +817,9 @@
                     <form class="order-form" id="retouchForm" action="https://formsubmit.co/spyrothehumanoid@gmail.com" method="POST" enctype="multipart/form-data">
                         <input type="hidden" name="_subject" value="Новая заявка на ретушь портрета с сайта">
                         <input type="hidden" name="_template" value="table">
-                        <input type="hidden" name="_captcha" value="false">
                         <input type="hidden" name="_next" id="nextRedirectUrl" value="">
+                        <input type="text" name="_honey" tabindex="-1" autocomplete="off" style="position:absolute;left:-9999px;width:1px;height:1px" aria-hidden="true">
+                        <input type="hidden" name="_url" id="formPageUrl" value="">
 
                         <div class="form-row">
                             <div class="form-group">
@@ -848,10 +849,10 @@
                                     </svg>
                                     Прикрепить файл
                                 </span>
-                                <span class="file-upload-name" id="fileNameDisplay">Файл не выбран (JPG, PNG, GIF, PDF, до 5 МБ)</span>
-                                <input type="file" id="photoFile" name="attachment" accept="image/jpeg,image/png,image/gif,image/webp,application/pdf">
+                                <span class="file-upload-name" id="fileNameDisplay">Файл не выбран (JPG, PNG, WebP, GIF, до 10 МБ)</span>
+                                <input type="file" id="photoFile" name="attachment" accept="image/jpeg,image/png,image/gif,image/webp" required>
                             </div>
-                            <span class="file-hint">Поддерживаются форматы JPG, PNG, WebP, GIF, PDF размером до 5 МБ.</span>
+                            <span class="file-hint">Поддерживаются фотографии JPG, PNG, WebP и GIF размером до 10 МБ.</span>
                         </div>
 
                         <div class="form-group">
@@ -860,7 +861,7 @@
                         </div>
 
                         <div class="checkbox-group">
-                            <input type="checkbox" id="privacyAgree" required>
+                            <input type="checkbox" id="privacyAgree" name="Согласие на обработку данных" value="Да" required>
                             <label for="privacyAgree">Я соглашаюсь с <a href="#privacy" id="openPrivacyLink">политикой конфиденциальности</a> и обработкой персональных данных</label>
                         </div>
 
@@ -951,10 +952,13 @@
         const retouchForm = document.getElementById('retouchForm');
         const submitBtn = document.getElementById('submitBtn');
         const nextRedirectUrl = document.getElementById('nextRedirectUrl');
-        const MAX_FILE_SIZE_MB = 5;
+        const formPageUrl = document.getElementById('formPageUrl');
+        const MAX_FILE_SIZE_MB = 10;
+        const ALLOWED_FILE_TYPES = ['image/jpeg', 'image/png', 'image/webp', 'image/gif'];
 
         const baseUrl = window.location.origin + window.location.pathname;
         nextRedirectUrl.value = `${baseUrl}?sent=1#orderFormCard`;
+        formPageUrl.value = window.location.href.split('?')[0];
 
         const urlParams = new URLSearchParams(window.location.search);
         if (urlParams.get('sent') === '1') {
@@ -968,12 +972,14 @@
                 const file = photoFileInput.files[0];
                 const sizeMb = (file.size / (1024 * 1024)).toFixed(2);
                 fileNameDisplay.textContent = `${file.name} (${sizeMb} МБ)`;
-                fileNameDisplay.style.color = file.size > MAX_FILE_SIZE_MB * 1024 * 1024
+                const invalidType = !ALLOWED_FILE_TYPES.includes(file.type);
+                const tooLarge = file.size > MAX_FILE_SIZE_MB * 1024 * 1024;
+                fileNameDisplay.style.color = (tooLarge || invalidType)
                     ? 'var(--error-color)'
                     : 'var(--text-primary)';
                 fileNameDisplay.style.fontWeight = '500';
             } else {
-                fileNameDisplay.textContent = 'Файл не выбран (JPG, PNG, GIF, PDF, до 5 МБ)';
+                fileNameDisplay.textContent = 'Файл не выбран (JPG, PNG, WebP, GIF, до 10 МБ)';
                 fileNameDisplay.style.color = 'var(--text-secondary)';
                 fileNameDisplay.style.fontWeight = '400';
             }
@@ -985,10 +991,16 @@
 
             if (photoFileInput.files && photoFileInput.files.length > 0) {
                 const file = photoFileInput.files[0];
+                if (!ALLOWED_FILE_TYPES.includes(file.type)) {
+                    e.preventDefault();
+                    formStatus.className = 'form-status error visible';
+                    formStatus.textContent = 'Неподдерживаемый формат. Прикрепите JPG, PNG, WebP или GIF.';
+                    return;
+                }
                 if (file.size > MAX_FILE_SIZE_MB * 1024 * 1024) {
                     e.preventDefault();
                     formStatus.className = 'form-status error visible';
-                    formStatus.textContent = `Файл слишком большой (${(file.size / (1024 * 1024)).toFixed(1)} МБ). Прикрепите файл до ${MAX_FILE_SIZE_MB} МБ или отправьте его напрямую на почту ${emailText}.`;
+                    formStatus.textContent = `Файл слишком большой (${(file.size / (1024 * 1024)).toFixed(1)} МБ). Максимальный размер — ${MAX_FILE_SIZE_MB} МБ.`;
                     return;
                 }
             }
