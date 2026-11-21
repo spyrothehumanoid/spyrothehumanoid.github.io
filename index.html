@@ -358,11 +358,11 @@
         }
 
         .contact-item .contact-icon.email-icon {
-            color: #c53030; /* красный контур */
+            color: #c53030;
         }
 
         .contact-item .contact-icon.telegram-icon {
-            color: #229ed9; /* синий телеграм */
+            color: #229ed9;
         }
 
         .contact-item .contact-text {
@@ -446,6 +446,25 @@
             font-size: 0.98rem;
             white-space: nowrap;
             flex-shrink: 0;
+        }
+
+        /* --- Примечание под ценами --- */
+        .pricing-note {
+            margin-top: 12px;
+            padding-top: 10px;
+            border-top: 1px dashed var(--border-subtle);
+            font-size: 0.82rem;
+            color: var(--text-secondary);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .pricing-note::before {
+            content: "✓";
+            color: var(--success-color);
+            font-weight: 700;
+            font-size: 0.9rem;
         }
 
         /* --- Яндекс Форма --- */
@@ -653,6 +672,12 @@
                 font-size: 0.88rem;
             }
 
+            .pricing-note {
+                font-size: 0.76rem;
+                margin-top: 10px;
+                padding-top: 8px;
+            }
+
             .ya-form-wrapper {
                 padding-bottom: 100px;
             }
@@ -772,14 +797,12 @@
     <footer>
         <div class="container">
             <div class="order-options-grid">
-                <!-- ЛЕВАЯ КОЛОНКА: Контакты + Цены -->
                 <div>
                     <div class="contact-box">
                         <span class="option-badge">Вариант 1</span>
                         <h2>Связаться для заказа</h2>
                         <p>Напишите напрямую — приложите исходные снимки и укажите пожелания по работе.</p>
 
-                        <!-- Email с красной иконкой -->
                         <div class="contact-item">
                             <span class="contact-icon email-icon" aria-hidden="true">
                                 <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
@@ -797,7 +820,6 @@
                             </button>
                         </div>
 
-                        <!-- Telegram с синей иконкой -->
                         <div class="contact-item">
                             <span class="contact-icon telegram-icon" aria-hidden="true">
                                 <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
@@ -816,7 +838,6 @@
                         </div>
                     </div>
 
-                    <!-- Компактный блок с ценами (без заголовка и иконки) -->
                     <div class="pricing-box" id="pricingBox">
                         <ul class="pricing-list">
                             <li>
@@ -828,10 +849,10 @@
                                 <span class="price">от 1000 ₽</span>
                             </li>
                         </ul>
+                        <p class="pricing-note">Оплата после согласования эскиза</p>
                     </div>
                 </div>
 
-                <!-- ПРАВАЯ КОЛОНКА: Яндекс Форма -->
                 <div class="contact-box" id="orderFormCard">
                     <span class="option-badge">Вариант 2</span>
                     <h2>Отправить фото на ретушь</h2>
