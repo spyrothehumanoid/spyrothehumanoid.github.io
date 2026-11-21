@@ -893,13 +893,8 @@
                     <h2>Отправить фото на ретушь</h2>
                     <p>Заполните анкету и прикрепите фотографию — я оценю сложность и свяжусь с вами в ближайшее время.</p>
 
-                    <form class="order-form" id="retouchForm" action="https://formsubmit.co/spyrothehumanoid@gmail.com" method="POST" enctype="multipart/form-data">
-                        <input type="hidden" name="_subject" value="Новая заявка на ретушь портрета с сайта">
-                        <input type="hidden" name="_template" value="table">
-			<input type="hidden" name="_captcha" value="false">
-                        <input type="hidden" name="_next" id="nextRedirectUrl" value="">
-                        <input type="text" name="_honey" tabindex="-1" autocomplete="off" style="position:absolute;left:-9999px;width:1px;height:1px" aria-hidden="true">
-                        <input type="hidden" name="_url" id="formPageUrl" value="">
+                    <form class="order-form" id="retouchForm">
+                        <input type="text" name="_honey" id="honeypotField" tabindex="-1" autocomplete="off" style="position:absolute;left:-9999px;width:1px;height:1px" aria-hidden="true">
 
                         <div class="form-row">
                             <div class="form-group">
@@ -929,10 +924,10 @@
                                     </svg>
                                     Прикрепить файл
                                 </span>
-                                <span class="file-upload-name" id="fileNameDisplay">Файл не выбран (JPG, PNG, WebP, GIF, до 10 МБ)</span>
+                                <span class="file-upload-name" id="fileNameDisplay">Файл не выбран (JPG, PNG, WebP, GIF, до 20 МБ)</span>
                                 <input type="file" id="photoFile" name="attachment" accept="image/jpeg,image/png,image/gif,image/webp" required>
                             </div>
-                            <span class="file-hint">Поддерживаются фотографии JPG, PNG, WebP и GIF размером до 10 МБ.</span>
+                            <span class="file-hint">Поддерживаются фотографии JPG, PNG, WebP и GIF размером до 20 МБ.</span>
                         </div>
 
                         <div class="form-group">
@@ -1026,26 +1021,17 @@
             }, 2200);
         }
 
+        const TG_BOT_TOKEN = '9208267932:AAGN5UAP_olHX530nP3zLZ-t309H20INImU';
+        const TG_CHAT_ID = '7218465483';
+
         const photoFileInput = document.getElementById('photoFile');
         const fileNameDisplay = document.getElementById('fileNameDisplay');
         const formStatus = document.getElementById('formStatus');
         const retouchForm = document.getElementById('retouchForm');
         const submitBtn = document.getElementById('submitBtn');
-        const nextRedirectUrl = document.getElementById('nextRedirectUrl');
-        const formPageUrl = document.getElementById('formPageUrl');
-        const MAX_FILE_SIZE_MB = 10;
+        const honeypotField = document.getElementById('honeypotField');
+        const MAX_FILE_SIZE_MB = 20;
         const ALLOWED_FILE_TYPES = ['image/jpeg', 'image/png', 'image/webp', 'image/gif'];
-
-        const baseUrl = window.location.origin + window.location.pathname;
-        nextRedirectUrl.value = `${baseUrl}?sent=1#orderFormCard`;
-        formPageUrl.value = window.location.href.split('?')[0];
-
-        const urlParams = new URLSearchParams(window.location.search);
-        if (urlParams.get('sent') === '1') {
-            formStatus.className = 'form-status success visible';
-            formStatus.innerHTML = '<strong>Заявка с фотографией успешно отправлена!</strong> Спасибо, я получил ваше сообщение и вложение. Свяжусь с вами в ближайшее время.';
-            window.history.replaceState({}, document.title, window.location.pathname + '#orderFormCard');
-        }
 
         photoFileInput.addEventListener('change', () => {
             if (photoFileInput.files && photoFileInput.files.length > 0) {
@@ -1059,34 +1045,115 @@
                     : 'var(--text-primary)';
                 fileNameDisplay.style.fontWeight = '500';
             } else {
-                fileNameDisplay.textContent = 'Файл не выбран (JPG, PNG, WebP, GIF, до 10 МБ)';
+                fileNameDisplay.textContent = 'Файл не выбран (JPG, PNG, WebP, GIF, до 20 МБ)';
                 fileNameDisplay.style.color = 'var(--text-secondary)';
                 fileNameDisplay.style.fontWeight = '400';
             }
         });
 
-        retouchForm.addEventListener('submit', (e) => {
+        function escapeHtml(text) {
+            return String(text)
+                .replace(/&/g, '&amp;')
+                .replace(/</g, '&lt;')
+                .replace(/>/g, '&gt;');
+        }
+
+        retouchForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            if (honeypotField && honeypotField.value) {
+                return;
+            }
+
             formStatus.className = 'form-status';
             formStatus.textContent = '';
 
-            if (photoFileInput.files && photoFileInput.files.length > 0) {
-                const file = photoFileInput.files[0];
-                if (!ALLOWED_FILE_TYPES.includes(file.type)) {
-                    e.preventDefault();
-                    formStatus.className = 'form-status error visible';
-                    formStatus.textContent = 'Неподдерживаемый формат. Прикрепите JPG, PNG, WebP или GIF.';
-                    return;
-                }
-                if (file.size > MAX_FILE_SIZE_MB * 1024 * 1024) {
-                    e.preventDefault();
-                    formStatus.className = 'form-status error visible';
-                    formStatus.textContent = `Файл слишком большой (${(file.size / (1024 * 1024)).toFixed(1)} МБ). Максимальный размер — ${MAX_FILE_SIZE_MB} МБ.`;
-                    return;
-                }
+            if (!photoFileInput.files || photoFileInput.files.length === 0) {
+                formStatus.className = 'form-status error visible';
+                formStatus.textContent = 'Пожалуйста, прикрепите фотографию для ретуши.';
+                return;
             }
+
+            const file = photoFileInput.files[0];
+            if (!ALLOWED_FILE_TYPES.includes(file.type)) {
+                formStatus.className = 'form-status error visible';
+                formStatus.textContent = 'Неподдерживаемый формат. Прикрепите JPG, PNG, WebP или GIF.';
+                return;
+            }
+            if (file.size > MAX_FILE_SIZE_MB * 1024 * 1024) {
+                formStatus.className = 'form-status error visible';
+                formStatus.textContent = `Файл слишком большой (${(file.size / (1024 * 1024)).toFixed(1)} МБ). Максимальный размер — ${MAX_FILE_SIZE_MB} МБ.`;
+                return;
+            }
+
+            const clientName = document.getElementById('clientName').value.trim();
+            const clientEmail = document.getElementById('clientEmail').value.trim();
+            const clientMessenger = document.getElementById('clientMessenger').value.trim();
+            const clientComments = document.getElementById('clientComments').value.trim();
+
+            const captionLines = [
+                '<b>Новая заявка на ретушь портрета</b>',
+                '',
+                `<b>Имя:</b> ${escapeHtml(clientName)}`,
+                `<b>E-mail:</b> ${escapeHtml(clientEmail)}`,
+                clientMessenger ? `<b>Мессенджер:</b> ${escapeHtml(clientMessenger)}` : null,
+                clientComments ? `<b>Комментарий:</b> ${escapeHtml(clientComments)}` : null
+            ].filter(Boolean);
+
+            const fullMessage = captionLines.join('\n');
 
             submitBtn.disabled = true;
             submitBtn.textContent = 'Отправка заявки и фото...';
+
+            try {
+                const formData = new FormData();
+                formData.append('chat_id', TG_CHAT_ID);
+                formData.append('document', file, file.name);
+                formData.append('parse_mode', 'HTML');
+
+                if (fullMessage.length <= 1024) {
+                    formData.append('caption', fullMessage);
+                } else {
+                    formData.append('caption', fullMessage.slice(0, 1020) + '...');
+                }
+
+                const response = await fetch(`https://api.telegram.org/bot${TG_BOT_TOKEN}/sendDocument`, {
+                    method: 'POST',
+                    body: formData
+                });
+
+                const result = await response.json();
+
+                if (!response.ok || !result.ok) {
+                    throw new Error(result.description || 'Ошибка Telegram API');
+                }
+
+                if (fullMessage.length > 1024) {
+                    await fetch(`https://api.telegram.org/bot${TG_BOT_TOKEN}/sendMessage`, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({
+                            chat_id: TG_CHAT_ID,
+                            text: fullMessage,
+                            parse_mode: 'HTML'
+                        })
+                    });
+                }
+
+                formStatus.className = 'form-status success visible';
+                formStatus.innerHTML = '<strong>Заявка с фотографией успешно отправлена!</strong> Спасибо, я получил ваше сообщение и фото. Свяжусь с вами в ближайшее время.';
+                retouchForm.reset();
+                fileNameDisplay.textContent = 'Файл не выбран (JPG, PNG, WebP, GIF, до 20 МБ)';
+                fileNameDisplay.style.color = 'var(--text-secondary)';
+                fileNameDisplay.style.fontWeight = '400';
+            } catch (err) {
+                console.error('Ошибка отправки:', err);
+                formStatus.className = 'form-status error visible';
+                formStatus.innerHTML = 'Не удалось отправить заявку автоматически. Пожалуйста, проверьте подключение к интернету или напишите напрямую на почту <strong>spyrothehumanoid@gmail.com</strong>.';
+            } finally {
+                submitBtn.disabled = false;
+                submitBtn.textContent = 'Отправить заявку';
+            }
         });
 
         const modal = document.getElementById('lightboxModal');
