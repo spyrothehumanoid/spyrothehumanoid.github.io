@@ -371,8 +371,9 @@
         }
 
         .copy-btn:hover {
-            background-color: var(--accent-gold-hover);
-            border-color: var(--accent-gold-hover);
+            background-color: var(--accent-gold);
+            border-color: var(--accent-gold);
+            color: var(--header-bg-start);
         }
 
         .copy-btn:active {
@@ -382,23 +383,26 @@
         .copy-btn.copied {
             background-color: var(--success-color);
             border-color: var(--success-color);
+            color: #ffffff;
         }
 
-        /* --- Yandex Form embed --- */
+        /* --- Обертка для Яндекс Формы (скрывает нижний футер) --- */
         .ya-form-wrapper {
             position: relative;
             width: 100%;
             border-radius: 12px;
             overflow: hidden;
+            height: 760px; /* Видимая высота */
             border: 1px solid var(--border-subtle);
-            background: var(--bg-main);
+            background: #ffffff;
         }
 
         .ya-form-wrapper iframe {
             display: block;
             width: 100%;
-            min-height: 720px;
+            height: 820px; /* Реальная высота iframe больше */
             border: 0;
+            margin-bottom: -60px; /* Сдвиг вверх для скрытия подвала */
         }
 
         .copyright {
@@ -573,8 +577,13 @@
                 justify-content: center;
             }
 
+            .ya-form-wrapper {
+                height: 860px; /* На мобильных форма выше */
+            }
+            
             .ya-form-wrapper iframe {
-                min-height: 820px;
+                height: 920px;
+                margin-bottom: -60px;
             }
         }
     </style>
