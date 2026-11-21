@@ -384,200 +384,21 @@
             border-color: var(--success-color);
         }
 
-        .order-form {
-            display: flex;
-            flex-direction: column;
-            gap: 16px;
-            text-align: left;
-        }
-
-        .form-row {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 16px;
-        }
-
-        .form-group {
-            display: flex;
-            flex-direction: column;
-            gap: 6px;
-            min-width: 0;
-        }
-
-        .form-group label {
-            font-size: 0.88rem;
-            font-weight: 500;
-            color: var(--text-primary);
-        }
-
-        .required-star {
-            color: var(--error-color);
-        }
-
-        .form-control {
-            width: 100%;
-            padding: 11px 14px;
-            border: 1px solid var(--border-subtle);
-            border-radius: 10px;
-            font-family: inherit;
-            font-size: 0.94rem;
-            color: var(--text-primary);
-            background-color: var(--bg-main);
-            transition: border-color 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
-        }
-
-        .form-control:focus {
-            outline: none;
-            border-color: var(--accent-gold);
-            background-color: #ffffff;
-            box-shadow: 0 0 0 3px rgba(184, 150, 88, 0.18);
-        }
-
-        textarea.form-control {
-            min-height: 96px;
-            resize: vertical;
-        }
-
-        .file-upload-box {
+        /* --- Yandex Form embed --- */
+        .ya-form-wrapper {
             position: relative;
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            padding: 12px 14px;
-            border: 1.5px dashed var(--accent-gold);
-            border-radius: 10px;
-            background-color: rgba(184, 150, 88, 0.06);
-            cursor: pointer;
-            transition: background-color 0.2s ease;
-            min-width: 0;
-            max-width: 100%;
-            overflow: hidden;
-        }
-
-        .file-upload-box:hover {
-            background-color: rgba(184, 150, 88, 0.13);
-        }
-
-        .file-upload-box input[type="file"] {
-            position: absolute;
-            inset: 0;
-            opacity: 0;
-            cursor: pointer;
             width: 100%;
-            height: 100%;
-        }
-
-        .file-upload-btn {
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            background: var(--header-bg-start);
-            color: #ffffff;
-            padding: 7px 14px;
-            border-radius: 7px;
-            font-size: 0.85rem;
-            font-weight: 500;
-            flex-shrink: 0;
-        }
-
-        .file-upload-name {
-            font-size: 0.88rem;
-            color: var(--text-secondary);
-            white-space: nowrap;
+            border-radius: 12px;
             overflow: hidden;
-            text-overflow: ellipsis;
-            min-width: 0;
-            flex: 1;
+            border: 1px solid var(--border-subtle);
+            background: var(--bg-main);
         }
 
-        .file-hint {
-            font-size: 0.78rem;
-            color: var(--text-secondary);
-        }
-
-        .checkbox-group {
-            display: flex;
-            align-items: flex-start;
-            gap: 10px;
-            margin-top: 2px;
-        }
-
-        .checkbox-group input[type="checkbox"] {
-            width: 18px;
-            height: 18px;
-            margin-top: 2px;
-            accent-color: var(--header-bg-start);
-            cursor: pointer;
-            flex-shrink: 0;
-        }
-
-        .checkbox-group label {
-            font-size: 0.85rem;
-            color: var(--text-secondary);
-            cursor: pointer;
-            line-height: 1.4;
-        }
-
-        .checkbox-group a {
-            color: var(--accent-gold-hover);
-            text-decoration: underline;
-        }
-
-        .submit-btn {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-            width: 100%;
-            background: linear-gradient(135deg, var(--header-bg-start) 0%, var(--header-bg-end) 100%);
-            color: var(--header-text);
-            border: 1px solid var(--accent-gold);
-            padding: 13px 22px;
-            border-radius: 10px;
-            font-size: 0.96rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: background 0.2s ease, transform 0.1s ease, box-shadow 0.2s ease, opacity 0.2s ease;
-        }
-
-        .submit-btn:hover:not(:disabled) {
-            background: var(--accent-gold-hover);
-            border-color: var(--accent-gold-hover);
-            color: #ffffff;
-            box-shadow: 0 6px 18px rgba(158, 126, 67, 0.28);
-        }
-
-        .submit-btn:active:not(:disabled) {
-            transform: scale(0.99);
-        }
-
-        .submit-btn:disabled {
-            opacity: 0.65;
-            cursor: not-allowed;
-        }
-
-        .form-status {
-            display: none;
-            padding: 13px 16px;
-            border-radius: 10px;
-            font-size: 0.9rem;
-            line-height: 1.45;
-        }
-
-        .form-status.visible {
+        .ya-form-wrapper iframe {
             display: block;
-        }
-
-        .form-status.success {
-            background-color: rgba(46, 125, 79, 0.12);
-            border: 1px solid var(--success-color);
-            color: var(--success-color);
-        }
-
-        .form-status.error {
-            background-color: rgba(197, 48, 48, 0.1);
-            border: 1px solid var(--error-color);
-            color: var(--error-color);
+            width: 100%;
+            min-height: 720px;
+            border: 0;
         }
 
         .copyright {
@@ -736,29 +557,6 @@
                 font-size: 1.65rem;
             }
 
-            .form-row {
-                grid-template-columns: 1fr;
-                gap: 14px;
-            }
-
-            .file-upload-box {
-                flex-direction: column;
-                align-items: stretch;
-                text-align: center;
-                gap: 8px;
-                padding: 12px;
-            }
-
-            .file-upload-btn {
-                justify-content: center;
-            }
-
-            .file-upload-name {
-                white-space: normal;
-                word-break: break-word;
-                font-size: 0.82rem;
-            }
-
             .email-control {
                 flex-direction: column;
                 align-items: stretch;
@@ -773,6 +571,10 @@
             .copy-btn {
                 width: 100%;
                 justify-content: center;
+            }
+
+            .ya-form-wrapper iframe {
+                min-height: 820px;
             }
         }
     </style>
@@ -875,7 +677,7 @@
                     <span class="option-badge">Вариант 1</span>
                     <h2>Связаться для заказа</h2>
                     <p>Скопируйте адрес электронной почты и напишите напрямую — приложите исходные снимки и укажите пожелания по работе.</p>
-                    
+
                     <div class="email-control">
                         <span class="email-text" id="emailAddress">spyrothehumanoid@gmail.com</span>
                         <button type="button" class="copy-btn" id="copyBtn" aria-label="Скопировать email">
@@ -893,57 +695,16 @@
                     <h2>Отправить фото на ретушь</h2>
                     <p>Заполните анкету и прикрепите фотографию — я оценю сложность и свяжусь с вами в ближайшее время.</p>
 
-                    <form class="order-form" id="retouchForm">
-                        <input type="text" name="_honey" id="honeypotField" tabindex="-1" autocomplete="off" style="position:absolute;left:-9999px;width:1px;height:1px" aria-hidden="true">
-
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label for="clientName">Ваше имя <span class="required-star">*</span></label>
-                                <input type="text" id="clientName" name="Имя" class="form-control" placeholder="Например, Алексей" required>
-                            </div>
-
-                            <div class="form-group">
-                                <label for="clientEmail">Ваш e-mail <span class="required-star">*</span></label>
-                                <input type="email" id="clientEmail" name="email" class="form-control" placeholder="name@example.com" required>
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="clientMessenger">Мессенджеры (Telegram, WhatsApp)</label>
-                            <input type="text" id="clientMessenger" name="Мессенджер" class="form-control" placeholder="@username или номер телефона">
-                        </div>
-
-                        <div class="form-group">
-                            <label for="photoFile">Фотография для ретуши</label>
-                            <div class="file-upload-box">
-                                <span class="file-upload-btn">
-                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
-                                        <polyline points="17 8 12 3 7 8"></polyline>
-                                        <line x1="12" y1="3" x2="12" y2="15"></line>
-                                    </svg>
-                                    Прикрепить файл
-                                </span>
-                                <span class="file-upload-name" id="fileNameDisplay">Файл не выбран (JPG, PNG, WebP, GIF, до 20 МБ)</span>
-                                <input type="file" id="photoFile" name="attachment" accept="image/jpeg,image/png,image/gif,image/webp" required>
-                            </div>
-                            <span class="file-hint">Поддерживаются фотографии JPG, PNG, WebP и GIF размером до 20 МБ.</span>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="clientComments">Комментарии</label>
-                            <textarea id="clientComments" name="Комментарии" class="form-control" placeholder="Опишите ваши пожелания: замена одежды, фона, реставрация, формат (под станок или фотокерамику)..."></textarea>
-                        </div>
-
-                        <div class="checkbox-group">
-                            <input type="checkbox" id="privacyAgree" name="Согласие на обработку данных" value="Да" required>
-                            <label for="privacyAgree">Я соглашаюсь с <a href="#privacy" id="openPrivacyLink">политикой конфиденциальности</a> и обработкой персональных данных</label>
-                        </div>
-
-                        <button type="submit" class="submit-btn" id="submitBtn">Отправить заявку</button>
-
-                        <div class="form-status" id="formStatus" role="alert"></div>
-                    </form>
+                    <div class="ya-form-wrapper">
+                        <iframe
+                            src="https://forms.yandex.ru/u/6b01883e6d2d732e91cd4ebd?iframe=1"
+                            frameborder="0"
+                            name="ya-form-6b01883e6d2d732e91cd4ebd"
+                            title="Форма заказа ретуши"
+                            allow="camera; microphone"
+                            loading="lazy"
+                        ></iframe>
+                    </div>
                 </div>
             </div>
 
@@ -970,6 +731,7 @@
         </div>
     </div>
 
+    <script src="https://forms.yandex.ru/_static/embed.js"></script>
     <script>
         const track = document.getElementById('carouselTrack');
         const prevBtn = document.getElementById('prevBtn');
@@ -1021,138 +783,6 @@
             }, 2200);
         }
 
-        const YANDEX_FUNCTION_URL = 'https://functions.yandexcloud.net/d4enp4j3j8baies84rrj';
-
-        const photoFileInput = document.getElementById('photoFile');
-        const fileNameDisplay = document.getElementById('fileNameDisplay');
-        const formStatus = document.getElementById('formStatus');
-        const retouchForm = document.getElementById('retouchForm');
-        const submitBtn = document.getElementById('submitBtn');
-        const honeypotField = document.getElementById('honeypotField');
-        const MAX_FILE_SIZE_MB = 20;
-        const ALLOWED_FILE_TYPES = ['image/jpeg', 'image/png', 'image/webp', 'image/gif'];
-
-        photoFileInput.addEventListener('change', () => {
-            if (photoFileInput.files && photoFileInput.files.length > 0) {
-                const file = photoFileInput.files[0];
-                const sizeMb = (file.size / (1024 * 1024)).toFixed(2);
-                fileNameDisplay.textContent = `${file.name} (${sizeMb} МБ)`;
-                const invalidType = !ALLOWED_FILE_TYPES.includes(file.type);
-                const tooLarge = file.size > MAX_FILE_SIZE_MB * 1024 * 1024;
-                fileNameDisplay.style.color = (tooLarge || invalidType)
-                    ? 'var(--error-color)'
-                    : 'var(--text-primary)';
-                fileNameDisplay.style.fontWeight = '500';
-            } else {
-                fileNameDisplay.textContent = 'Файл не выбран (JPG, PNG, WebP, GIF, до 20 МБ)';
-                fileNameDisplay.style.color = 'var(--text-secondary)';
-                fileNameDisplay.style.fontWeight = '400';
-            }
-        });
-
-        function escapeHtml(text) {
-            return String(text)
-                .replace(/&/g, '&amp;')
-                .replace(/</g, '&lt;')
-                .replace(/>/g, '&gt;');
-        }
-
-        function fileToBase64(file) {
-            return new Promise((resolve, reject) => {
-                const reader = new FileReader();
-                reader.onload = () => {
-                    const dataUrl = String(reader.result || '');
-                    const commaIdx = dataUrl.indexOf(',');
-                    resolve(commaIdx !== -1 ? dataUrl.slice(commaIdx + 1) : dataUrl);
-                };
-                reader.onerror = () => reject(new Error('Не удалось прочитать файл'));
-                reader.readAsDataURL(file);
-            });
-        }
-
-        retouchForm.addEventListener('submit', async (e) => {
-            e.preventDefault();
-
-            if (honeypotField && honeypotField.value) {
-                return;
-            }
-
-            formStatus.className = 'form-status';
-            formStatus.textContent = '';
-
-            if (!photoFileInput.files || photoFileInput.files.length === 0) {
-                formStatus.className = 'form-status error visible';
-                formStatus.textContent = 'Пожалуйста, прикрепите фотографию для ретуши.';
-                return;
-            }
-
-            const file = photoFileInput.files[0];
-            if (!ALLOWED_FILE_TYPES.includes(file.type)) {
-                formStatus.className = 'form-status error visible';
-                formStatus.textContent = 'Неподдерживаемый формат. Прикрепите JPG, PNG, WebP или GIF.';
-                return;
-            }
-            if (file.size > MAX_FILE_SIZE_MB * 1024 * 1024) {
-                formStatus.className = 'form-status error visible';
-                formStatus.textContent = `Файл слишком большой (${(file.size / (1024 * 1024)).toFixed(1)} МБ). Максимальный размер — ${MAX_FILE_SIZE_MB} МБ.`;
-                return;
-            }
-
-            const clientName = document.getElementById('clientName').value.trim();
-            const clientEmail = document.getElementById('clientEmail').value.trim();
-            const clientMessenger = document.getElementById('clientMessenger').value.trim();
-            const clientComments = document.getElementById('clientComments').value.trim();
-
-            const captionLines = [
-                '<b>Новая заявка на ретушь портрета</b>',
-                '',
-                `<b>Имя:</b> ${escapeHtml(clientName)}`,
-                `<b>E-mail:</b> ${escapeHtml(clientEmail)}`,
-                clientMessenger ? `<b>Мессенджер:</b> ${escapeHtml(clientMessenger)}` : null,
-                clientComments ? `<b>Комментарий:</b> ${escapeHtml(clientComments)}` : null
-            ].filter(Boolean);
-
-            const fullMessage = captionLines.join('\n');
-
-            submitBtn.disabled = true;
-            submitBtn.textContent = 'Отправка заявки и фото...';
-
-            try {
-                const fileBase64 = await fileToBase64(file);
-
-                const response = await fetch(YANDEX_FUNCTION_URL, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({
-                        caption: fullMessage,
-                        fileName: file.name,
-                        fileType: file.type,
-                        fileBase64: fileBase64
-                    })
-                });
-
-                const result = await response.json();
-
-                if (!response.ok || !result.ok) {
-                    throw new Error(result.error || 'Ошибка отправки на сервер');
-                }
-
-                formStatus.className = 'form-status success visible';
-                formStatus.innerHTML = '<strong>Заявка с фотографией успешно отправлена!</strong> Спасибо, я получил ваше сообщение и фото. Свяжусь с вами в ближайшее время.';
-                retouchForm.reset();
-                fileNameDisplay.textContent = 'Файл не выбран (JPG, PNG, WebP, GIF, до 20 МБ)';
-                fileNameDisplay.style.color = 'var(--text-secondary)';
-                fileNameDisplay.style.fontWeight = '400';
-            } catch (err) {
-                console.error('Ошибка отправки:', err);
-                formStatus.className = 'form-status error visible';
-                formStatus.innerHTML = 'Не удалось отправить заявку автоматически. Пожалуйста, проверьте подключение к интернету или напишите напрямую на почту <strong>spyrothehumanoid@gmail.com</strong>.';
-            } finally {
-                submitBtn.disabled = false;
-                submitBtn.textContent = 'Отправить заявку';
-            }
-        });
-
         const modal = document.getElementById('lightboxModal');
         const modalImg = document.getElementById('modalImg');
         const modalCaption = document.getElementById('modalCaption');
@@ -1163,11 +793,11 @@
             wrapper.addEventListener('click', () => {
                 const img = wrapper.querySelector('img');
                 const caption = wrapper.getAttribute('data-caption') || img.alt;
-                
+
                 modalImg.src = img.src;
                 modalImg.alt = img.alt;
                 modalCaption.textContent = caption;
-                
+
                 modal.classList.add('open');
                 modal.setAttribute('aria-hidden', 'false');
                 document.body.style.overflow = 'hidden';
@@ -1186,15 +816,7 @@
         });
 
         const privacyModal = document.getElementById('privacyModal');
-        const openPrivacyLink = document.getElementById('openPrivacyLink');
         const privacyClose = document.getElementById('privacyClose');
-
-        openPrivacyLink.addEventListener('click', (e) => {
-            e.preventDefault();
-            privacyModal.classList.add('open');
-            privacyModal.setAttribute('aria-hidden', 'false');
-            document.body.style.overflow = 'hidden';
-        });
 
         function closePrivacyModal() {
             privacyModal.classList.remove('open');
